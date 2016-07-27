@@ -1,1 +1,1 @@
-# project_euler
+A compilation of solutions to the various problems listed at https://projecteuler.net
