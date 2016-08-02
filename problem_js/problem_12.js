@@ -22,19 +22,55 @@
  */
 
 solutions.problem_12 = function () {
-  var sum = 0;
-  var max_factors = 20;
+  var max_factors = 500;
 
-  for (var index = 1; index < 10000; index++) {
-    var tri_number =  scratch.problem_12.getTriangleNumber(index);
+  for (var index = 1; index < 100000; index++) {
+    var tri_number = scratch.problem_12.getTriangleNumber(index);
 
+    if (scratch.problem_12.getDivisorsCount(tri_number) > max_factors) {
+      scratch.problem_12 = {};
+      return tri_number;
+    }
 
   }
+
   scratch.problem_12 = {};
-  return sum;
+  return 0;
 };
 
 scratch.problem_12 = {};
+/**
+ * This calculates the triangle number for the given index, ex. 7th triangle number = 28
+ *
+ * @param index
+ * @returns {number}
+ */
 scratch.problem_12.getTriangleNumber = function (index) {
   return (index * (index + 1)) / 2;
+};
+
+/**
+ * This gets the number of divisors for a given number
+ *
+ * @param value
+ * @returns {number}
+ */
+scratch.problem_12.getDivisorsCount = function (value) {
+  var limit = value;
+  var number_of_divisors = 0;
+
+  if (value == 1)
+    return 1;
+
+  for (var index = 1; index < limit; index++) {
+    if (value % index == 0) {
+      limit = value / index;
+      if (limit != index) {
+        number_of_divisors++;
+      }
+      number_of_divisors++;
+    }
+  }
+
+  return number_of_divisors;
 };
