@@ -17,10 +17,46 @@
  NOTE: Once the chain starts the terms are allowed to go above one million.
  */
 solutions.problem_14 = function () {
-
+  var limit = 1000000;
+  var max_sequence_count = 0;
+  var max_sequence_index = 0;
+  for (var index = 1; index < limit; index++) {
+    var test_count = scratch.problem_14.count_sequence_terms(index);
+    if (test_count > max_sequence_count) {
+      max_sequence_count = test_count;
+      max_sequence_index = index;
+    }
+  }
 
   scratch.problem_14 = {};
-  return 0;
+  return max_sequence_index;
 };
 
 scratch.problem_14 = {};
+// implementing a basic value cache decreases processing time by around 5-6 fold
+scratch.problem_14.number_cache = {};
+scratch.problem_14.count_sequence_terms = function(value) {
+  var count = 1;
+  var test = value;
+
+  if (scratch.problem_14.number_cache.hasOwnProperty(test))
+    return scratch.problem_14.number_cache[test];
+
+  while (test > 1) {
+    if (test % 2 == 0)
+      test = test / 2;
+    else
+      test = (3*test) + 1;
+
+    if (scratch.problem_14.number_cache.hasOwnProperty(test)) {
+      scratch.problem_14.number_cache[value] = count + scratch.problem_14.number_cache[test];
+
+      return count + scratch.problem_14.number_cache[test];
+    }
+
+    count++;
+  }
+
+  scratch.problem_14.number_cache[value] = count;
+  return count;
+};
