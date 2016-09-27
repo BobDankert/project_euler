@@ -14,12 +14,26 @@
 
  How many such routes are there through a 20×20 grid?
  */
-solutions.problem_15 = function () {
-  scratch.problem_15 = {};
 
-  // the size of the chain will be 40
-  // there can't be more than 20 d's and 20r's per chain
-  return 0;
+solutions.problem_15 = function () {
+  var square_size = 20;
+
+  // create and fill the array with all 1's
+  var path_matrix = [];
+  for (var index = 0; index <= square_size; index++)
+    path_matrix.push(Array(square_size + 1).fill(1));
+
+  for (var x_pos = square_size-1; x_pos >= 0; x_pos--) {
+    for (var y_pos = square_size - 1; y_pos >= 0; y_pos--) {
+      if (x_pos == y_pos)
+        path_matrix[x_pos][y_pos] = path_matrix[x_pos + 1][y_pos] * 2;
+      else
+        path_matrix[x_pos][y_pos] = path_matrix[x_pos + 1][y_pos] + path_matrix[x_pos][y_pos + 1];
+    }
+  }
+
+  scratch.problem_15 = {};
+  return path_matrix[0][0];
 };
 
 scratch.problem_15 = {};
